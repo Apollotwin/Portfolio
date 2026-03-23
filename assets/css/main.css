@@ -80,6 +80,7 @@ input, select, textarea {
 
 	body {
 		-ms-overflow-style: scrollbar;
+		overflow-x: hidden;
 	}
 
 	@media screen and (max-width: 480px) {
@@ -4691,6 +4692,58 @@ input, select, textarea {
 
 	iframe {
 		max-width: 100%;
+	}
+
+/* Mobile scaling fixes */
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	@media screen and (max-width: 736px) {
+
+		.image.left, .image.right {
+			max-width: 100%;
+			float: none;
+			margin: 0 0 2rem 0;
+		}
+
+		.button.large, .button {
+			white-space: normal;
+			word-wrap: break-word;
+			max-width: 100%;
+			height: auto;
+			line-height: 1.65;
+			padding: 0.75rem 1.5rem;
+		}
+
+		#intro p br, #main p br, #main header br {
+			display: none;
+		}
+
+	}
+
+	@media screen and (max-width: 480px) {
+
+		#main {
+			width: 100%;
+		}
+
+		#main > .post {
+			padding: 2rem 1.5rem 1.5rem 1.5rem;
+		}
+
+		.row {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.row > [class*="col-"] {
+			min-width: 80px;
+		}
+
 	}
 
 	@media screen and (max-width: 980px) {
