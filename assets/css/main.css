@@ -8,23 +8,34 @@
 
 /* --- Design Tokens --- */
 :root {
-  /* Colors */
-  --bg-primary: #0b0b10;
-  --bg-surface: #12121a;
-  --bg-elevated: #1a1a26;
-  --bg-hover: #22222e;
-  --border: #2a2a3a;
-  --border-subtle: #1e1e2e;
+  /* Colors — warm navy base, vibrant accents */
+  --bg-primary: #141824;
+  --bg-surface: #1b2033;
+  --bg-elevated: #232940;
+  --bg-hover: #2b324d;
+  --border: #354060;
+  --border-subtle: #262e48;
 
-  --text-primary: #e4e4ec;
-  --text-secondary: #9090a8;
-  --text-muted: #606078;
+  --text-primary: #eef0f6;
+  --text-secondary: #a4abc4;
+  --text-muted: #6b7394;
 
-  --accent: #c9a455;
-  --accent-dim: rgba(201, 164, 85, 0.15);
-  --accent-hover: #ddb962;
-  --accent-blue: #6b8ec7;
-  --accent-blue-dim: rgba(107, 142, 199, 0.12);
+  /* Primary accent — coral/orange (warm, energetic) */
+  --accent: #ff7a5c;
+  --accent-dim: rgba(255, 122, 92, 0.14);
+  --accent-hover: #ff9478;
+
+  /* Discipline colors */
+  --color-music: #ff7a5c;       /* warm coral */
+  --color-music-dim: rgba(255, 122, 92, 0.12);
+  --color-sound: #4fd1c5;       /* teal */
+  --color-sound-dim: rgba(79, 209, 197, 0.12);
+  --color-code: #a78bfa;        /* purple */
+  --color-code-dim: rgba(167, 139, 250, 0.12);
+
+  /* Extra palette */
+  --accent-gold: #f0c55e;
+  --accent-blue: #6b9ff7;
 
   /* Typography */
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -120,7 +131,7 @@ hr {
 }
 
 ::selection {
-  background: var(--accent);
+  background: var(--color-music);
   color: var(--bg-primary);
 }
 
@@ -155,7 +166,7 @@ hr {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md) var(--space-xl);
-  background: rgba(11, 11, 16, 0.85);
+  background: rgba(20, 24, 36, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
@@ -239,7 +250,7 @@ hr {
 }
 
 #navPanelToggle.alt {
-  background: rgba(26, 26, 38, 0.9);
+  background: rgba(27, 32, 51, 0.92);
 }
 
 #navPanelToggle:hover {
@@ -261,6 +272,10 @@ hr {
   padding: calc(80px + var(--space-2xl)) var(--space-xl) var(--space-2xl);
   position: relative;
   transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(167, 139, 250, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(255, 122, 92, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(79, 209, 197, 0.05) 0%, transparent 50%);
 }
 
 #intro.hidden {
@@ -280,12 +295,23 @@ hr {
 }
 
 .hero-photo {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--border);
-  box-shadow: 0 0 40px rgba(201, 164, 85, 0.08);
+  box-shadow:
+    0 0 30px rgba(255, 122, 92, 0.12),
+    0 0 60px rgba(79, 209, 197, 0.08),
+    0 0 90px rgba(167, 139, 250, 0.06);
+  transition: box-shadow 0.4s var(--ease);
+}
+
+.hero-photo:hover {
+  box-shadow:
+    0 0 40px rgba(255, 122, 92, 0.2),
+    0 0 80px rgba(79, 209, 197, 0.12),
+    0 0 120px rgba(167, 139, 250, 0.1);
 }
 
 .hero-name {
@@ -343,26 +369,45 @@ hr {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: var(--accent);
-  opacity: 0;
+  height: 3px;
+  background: var(--card-color, var(--accent));
+  opacity: 0.6;
   transition: opacity 0.3s var(--ease);
 }
 
 .discipline-card:hover {
-  border-color: var(--border);
+  border-color: var(--card-color, var(--border));
   background: var(--bg-elevated);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .discipline-card:hover::before {
   opacity: 1;
 }
 
+/* Per-discipline colors */
+.discipline-card--music { --card-color: var(--color-music); }
+.discipline-card--sound { --card-color: var(--color-sound); }
+.discipline-card--code  { --card-color: var(--color-code); }
+
+.discipline-card--music .discipline-icon { color: var(--color-music); }
+.discipline-card--sound .discipline-icon { color: var(--color-sound); }
+.discipline-card--code  .discipline-icon { color: var(--color-code); }
+
+.discipline-card--music:hover { border-color: rgba(255, 122, 92, 0.35); }
+.discipline-card--sound:hover { border-color: rgba(79, 209, 197, 0.35); }
+.discipline-card--code:hover  { border-color: rgba(167, 139, 250, 0.35); }
+
 .discipline-icon {
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: var(--space-md);
   display: block;
+  transition: transform 0.3s var(--ease);
+}
+
+.discipline-card:hover .discipline-icon {
+  transform: scale(1.15);
 }
 
 .discipline-card h3 {
@@ -396,8 +441,9 @@ hr {
 }
 
 .scroll-arrow:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: var(--color-sound);
+  border-color: var(--color-sound);
+  box-shadow: 0 0 15px rgba(79, 209, 197, 0.2);
 }
 
 @keyframes float {
@@ -426,9 +472,12 @@ hr {
 .page-header .subtitle {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--accent);
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  background: linear-gradient(135deg, var(--color-music), var(--color-sound));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* --- Section Title --- */
@@ -445,10 +494,11 @@ hr {
 .section-title::after {
   content: '';
   display: block;
-  width: 48px;
-  height: 2px;
-  background: var(--accent);
+  width: 56px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-music), var(--color-sound), var(--color-code));
   margin: var(--space-md) auto 0;
+  border-radius: 2px;
 }
 
 /* --- Work Cards --- */
@@ -460,13 +510,18 @@ hr {
 .work-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  transition: border-color 0.3s var(--ease);
+  transition: all 0.3s var(--ease);
 }
 
 .work-card:hover {
   border-color: var(--border);
+  border-left-color: var(--accent-hover);
+  background: var(--bg-elevated);
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .work-card-header {
@@ -519,11 +574,13 @@ hr {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color 0.3s var(--ease);
+  transition: all 0.3s var(--ease);
 }
 
 .project-card:hover {
   border-color: var(--border);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
 }
 
 .project-card-media {
@@ -573,13 +630,19 @@ hr {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-sm);
+  padding: 0.3rem 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--text-muted);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
+  color: var(--color-code);
+  background: var(--color-code-dim);
+  border: 1px solid rgba(167, 139, 250, 0.2);
   border-radius: 4px;
+  transition: all var(--transition);
+}
+
+.tech-badge:hover {
+  background: rgba(167, 139, 250, 0.18);
+  border-color: rgba(167, 139, 250, 0.35);
 }
 
 /* --- Music Section --- */
@@ -597,7 +660,8 @@ hr {
   font-weight: 600;
   margin-bottom: var(--space-lg);
   padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--color-music) 0%, transparent 70%) 1;
   color: var(--text-primary);
 }
 
@@ -924,8 +988,8 @@ hr {
   }
 
   .hero-photo {
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
   }
 
   .project-card-body {
